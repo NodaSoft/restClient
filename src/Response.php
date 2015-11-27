@@ -47,6 +47,7 @@ class Response
     public function setStatus($status)
     {
         $this->status = (int)$status;
+
         return $this;
     }
 
@@ -69,6 +70,7 @@ class Response
     public function setHeaders($headers)
     {
         $this->headers = $headers;
+
         return $this;
     }
 
@@ -81,6 +83,7 @@ class Response
     public function getAsArray()
     {
         $jsonData = json_decode($this->getBody(), true);
+
         return $jsonData ? $jsonData : array();
     }
 
@@ -103,6 +106,7 @@ class Response
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 }

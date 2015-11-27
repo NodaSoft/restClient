@@ -65,6 +65,7 @@ class Request
     public function setServiceUrl($serviceUrl)
     {
         $this->serviceUrl = $serviceUrl;
+
         return $this;
     }
 
@@ -87,6 +88,7 @@ class Request
     public function setHttpAccept($httpAccept)
     {
         $this->httpAccept = $httpAccept;
+
         return $this;
     }
 
@@ -109,6 +111,7 @@ class Request
     public function setMethod($method)
     {
         $this->method = $method;
+
         return $this;
     }
 
@@ -131,6 +134,7 @@ class Request
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
+
         return $this;
     }
 
@@ -144,6 +148,7 @@ class Request
     public function addParameter($name, $value)
     {
         $this->parameters[$name] = $value;
+
         return $this;
     }
 
@@ -156,6 +161,7 @@ class Request
     public function removeParameter($name)
     {
         unset($this->parameters[$name]);
+
         return $this;
     }
 
@@ -178,6 +184,7 @@ class Request
     public function setOperation($operation)
     {
         $this->operation = $operation;
+
         return $this;
     }
 }

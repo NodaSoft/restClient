@@ -2,7 +2,7 @@
 namespace NS\RestClient;
 
 /**
- * ABCP TecDoc API Web-service REST-Client.
+ * API Web-service REST-Client.
  */
 class RestClient
 {
@@ -16,7 +16,6 @@ class RestClient
     public function send(Request $request)
     {
         $response = null;
-
         $curlHandle = curl_init();
         $requestMethod = $request->getMethod();
         try {
@@ -41,6 +40,7 @@ class RestClient
             throw $e;
         }
         curl_close($curlHandle);
+
         return $response;
     }
 
@@ -97,8 +97,13 @@ class RestClient
         $response->setStatus($info['http_code']);
         if (false !== $res) {
             $response->setHeaders(substr($res, 0, $info['header_size']));
-            $response->setBody(substr($res, -$info['download_content_length']));
+            if ($info['download_content_length'] > 0) {
+                $response->setBody(substr($res, -$info['download_content_length']));
+            } else {
+                $response->setBody(substr($res, $info['header_size']));
+            }
         }
+
         return $response;
     }
 
@@ -115,6 +120,7 @@ class RestClient
 
         $requestVars = $request->getParameters();
         curl_setopt($curlHandle, CURLOPT_POSTFIELDS, self::convertArray($requestVars));
+
         return $this->doExecute($curlHandle, $request);
     }
 
@@ -140,6 +146,7 @@ class RestClient
                     $out[$path1] = $result;
                 }
             }
+
             return $out;
         } else {
             return $data;
@@ -204,6 +211,7 @@ class RestClient
     {
         curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $request->getOperation());
         curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
         return $this->doExecute($curlHandle, $request);
     }
 }
