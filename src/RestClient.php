@@ -116,7 +116,9 @@ class RestClient
      */
     private function executePost($curlHandle, Request $request)
     {
-        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $request->getOperation());
+        $operation = strpos($request->getOperation(),
+            '/') === 0 ? $request->getOperation() : '/' . $request->getOperation();
+        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $operation);
 
         $requestVars = $request->getParameters();
         curl_setopt($curlHandle, CURLOPT_POSTFIELDS, self::convertArray($requestVars));
@@ -162,7 +164,9 @@ class RestClient
      */
     private function executePut($curlHandle, Request $request)
     {
-        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $request->getOperation());
+        $operation = strpos($request->getOperation(),
+            '/') === 0 ? $request->getOperation() : '/' . $request->getOperation();
+        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $operation);
 
         $requestBody = '';
         $requestLength = 0;
@@ -209,7 +213,9 @@ class RestClient
      */
     private function executeDelete($curlHandle, Request $request)
     {
-        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $request->getOperation());
+        $operation = strpos($request->getOperation(),
+            '/') === 0 ? $request->getOperation() : '/' . $request->getOperation();
+        curl_setopt($curlHandle, CURLOPT_URL, $request->getServiceUrl() . $operation);
         curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
         return $this->doExecute($curlHandle, $request);
